@@ -2,5 +2,15 @@
 
 {% block content %}
     conver/index.html
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Generate O RLY" />
+    </form>
+
+    <img src="/cover/image.jpg" />
 {% endblock %}
 
