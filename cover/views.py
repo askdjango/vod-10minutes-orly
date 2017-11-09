@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from PIL import Image, ImageFont, ImageDraw
 from .forms import CoverForm
+from .utils import COLOR_CODES
 
 
 def index(request):
@@ -22,14 +23,21 @@ def image_generator(request):
     top_text = request.GET['top_text']
     author = request.GET['author']
     animal_code = request.GET['animal_code']
-    color_code = request.GET['color_code']
+    color_index = request.GET['color_code']
     guide_text = request.GET['guide_text']
     guide_text_placement = request.GET['guide_text_placement']
 
-    im = Image.new('RGB', (256, 256), 'white')
+    animal_path = settings.ROOT('assets', 'animal', '{}.png'.format(animal_code))
+    animal_im = Image.open(animal_path)
+    animal_im = animal_im.resize((200, 200))
+
+    color = COLOR_CODES[int(color_index)]
+
+    canvas_im = Image.new('RGB', (500, 700), color)
+    canvas_im.paste(animal_im, (0, 0))  # left/top 지정
 
     ttf_path = settings.ROOT('assets', 'fonts', 'NanumGothicCoding.ttf')
-    d = ImageDraw.Draw(im)
+    d = ImageDraw.Draw(canvas_im)
 
     fnt = ImageFont.truetype(ttf_path, 40)
     d.text((10, 10), title, font=fnt, fill=(0, 255, 0, 128))
@@ -41,6 +49,6 @@ def image_generator(request):
     d.text((10, 110), author, font=fnt, fill=(0, 255, 0, 255))
 
     response = HttpResponse(content_type='image/png')  # file-like
-    im.save(response, format='PNG')
+    canvas_im.save(response, format='PNG')
     return response
 
