@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^image.jpg$', views.image_generator, name='image_generator'),
+    url(r'^image.png$', views.image_generator, name='image_generator'),
 ]
 

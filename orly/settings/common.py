@@ -14,6 +14,7 @@ import os
 from os.path import abspath, dirname, join
 
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
+ROOT = lambda *args: join(BASE_DIR, *args)
 
 
 # Quick-start development settings - unsuitable for production

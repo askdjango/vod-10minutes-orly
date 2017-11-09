@@ -11,6 +11,8 @@
         <input type="submit" value="Generate O RLY" />
     </form>
 
-    <img src="/cover/image.jpg" />
+    {% if form.get_params %}
+        <img src="{% url "cover:image_generator" %}?{{ form.get_params }}" />
+    {% endif %}
 {% endblock %}
 
