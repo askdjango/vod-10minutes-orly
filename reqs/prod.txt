@@ -1,1 +1,6 @@
 -r common.txt
+
+uwsgi
+django-storages
+azure-storage==0.20.0
+
